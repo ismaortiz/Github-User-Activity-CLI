@@ -1,0 +1,24 @@
+{
+  "name": "githubuseractivitycli",
+  "version": "1.0.0",
+  "description": "CLI to fetch user data from github",
+  "homepage": "https://github.com/ismaortiz/Github-User-Activity-CLI#readme",
+  "bugs": {
+    "url": "https://github.com/ismaortiz/Github-User-Activity-CLI/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ismaortiz/Github-User-Activity-CLI.git"
+  },
+  "license": "ISC",
+  "author": "Ismael Ortiz",
+  "type": "commonjs",
+  "main": "src/main.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "typescript": "^5.7.3"
+  }
+}
