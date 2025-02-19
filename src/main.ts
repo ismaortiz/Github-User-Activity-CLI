@@ -1,5 +1,4 @@
 import { argv } from 'node:process';
-import {readFileSync} from 'node:fs';
 
 function main(params: string[]): void{
     if (incorrectUsername(params)) {
@@ -46,68 +45,60 @@ type Event = {
         url: string
     },
     created_at: string
+    payload: {
+        action: string
+        ref: string,
+        ref_type: string
+    }
 };
 
-function printActivity(events: any): void {
-    let data: Event[] = events;
-    data.forEach(singular_event =>{
-        
-        switch (singular_event["type"]) {
+function printActivity(events: any): void{
+    const eve: Event[] = events;
+    const capFirst = (word: string) => word.charAt(0).toUpperCase() + word.slice(1);
+    let sentence: string;
+    eve.forEach(event =>{
+        switch (event.type) {
             case "CommitCommentEvent":
-                
+                sentence = `Commented in a commit at ${event.repo.name}`;
                 break;
 
             case "CreateEvent":
+                sentence = `Created a new ${event.payload.ref_type} at ${event.repo.name}`;
                 break;
 
             case "DeleteEvent":
+                sentence = `Deleted a ${event.payload.ref_type} at ${event.repo.name}`;
                 break;
 
             case "ForkEvent":
-                break;
-
-            case "GollumEvent":
+                sentence = `Forked the respository: ${event.repo.name} `;
                 break;
 
             case "IssueCommentEvent":
+                // sentence = `"${capFirst(event.payload.action)}" `;
                 break;
 
             case "IssuesEvent":
+                sentence = `${capFirst(event.payload.action)} an issue at ${event.repo.name}`;
                 break;
 
-            case "MemberEvent":
-                break;
-
-            case "PublicEvent":
-                break;
 
             case "PullRequestEvent":
-                break;
-
-            case "PullRequestReviewEvent":
-                break;
-
-            case "PullRequestReviewCommentEvent":
-                break;
-
-            case "PullRequestReviewThreadEvent":
+                sentence = `${capFirst(event.payload.action)} a pull request at ${event.repo.name}`;
                 break;
 
             case "PushEvent":
+                sentence = `Pushed a commit to ${event.repo.name}`;
                 break;
 
             case "ReleaseEvent":
                 break;
 
-            case "SponsorshipEvent":
-                break;
-
             case "WatchEvent":
-                break;
-            default:
+                sentence = `Starred ${event.repo.name}`;
                 break;
         }
+        console.log(sentence);
     })
 }
-printActivity(readFileSync('C:/Users/Ismael/Projects/myjson.json', 'utf8'))
-//main(argv);
+main(argv);
